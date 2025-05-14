@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Create Category</title>
+  <link rel="stylesheet"
+        th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container mt-5">
+  <h1>Create Category</h1>
+  <form th:action="@{/categories/create}"
+        th:object="${category}" method="post">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input id="name" type="text" class="form-control"
+             th:field="*{name}" placeholder="Category name"/>
+    </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea id="description" class="form-control"
+                th:field="*{description}"
+                placeholder="Optional description"></textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Save</button>
+    <a th:href="@{/categories}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}" defer></script>
+</body>
+</html>

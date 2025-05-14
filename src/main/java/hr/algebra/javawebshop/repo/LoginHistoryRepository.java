@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface LoginHistoryRepository extends JpaRepository<LoginHistory, Long> {
     List<LoginHistory> findByUser(User user);
-    List<LoginHistory> findByLoginTimestampBetween(LocalDateTime start, LocalDateTime end);
-    List<LoginHistory> findByIpAddress(String ipAddress);
+   // List<LoginHistory> findByLoginTimestampBetween(LocalDateTime start, LocalDateTime end);
+   // List<LoginHistory> findByIpAddress(String ipAddress);
 }

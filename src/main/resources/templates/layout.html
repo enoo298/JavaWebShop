@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:fragment="layout (pageTitle, bodyContent)">
+<head>
+    <meta charset="UTF-8">
+    <!-- ovdje se ubacuje naslov iz konkretne stranice -->
+    <title th:insert="~{pageTitle}">My Web Shop</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<!-- zajednički header -->
+<div th:insert="fragments/header :: header"></div>
+
+<!-- ovdje ide body iz konkretne stranice -->
+<div class="container" th:insert="~{bodyContent}"></div>
+
+<!-- zajednički footer -->
+<div th:insert="fragments/footer :: footer"></div>
+</body>
+</html>

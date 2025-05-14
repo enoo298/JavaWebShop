@@ -1,0 +1,80 @@
+<!-- src/main/resources/templates/fragments/navbar.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<nav th:fragment="navbar"
+     class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" th:href="@{/}">WebShop</a>
+    <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+      <!-- Lijeva strana: glavni linkovi -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/products/listProducts}">Products</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/categories/listCategories}">Categories</a>
+        </li>
+
+        <!-- Cart JE sada vidljiv svima -->
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/cart}">Cart</a>
+        </li>
+
+        <!-- Orders ostaju samo za ulogirane -->
+        <li class="nav-item" sec:authorize="isAuthenticated()">
+          <a class="nav-link" th:href="@{/orders}">Orders</a>
+        </li>
+      </ul>
+
+      <!-- Desna strana: auth linkovi -->
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <!-- anonimni korisnici -->
+        <li class="nav-item" sec:authorize="!isAuthenticated()">
+          <a class="nav-link" th:href="@{/login}">Login</a>
+        </li>
+        <li class="nav-item" sec:authorize="!isAuthenticated()">
+          <a class="nav-link" th:href="@{/register}">Register</a>
+        </li>
+
+        <!-- ulogirani korisnici -->
+        <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+          <a class="nav-link dropdown-toggle" href="#" id="userMenu"
+             role="button" data-bs-toggle="dropdown"
+             aria-expanded="false">
+            <span sec:authentication="name">User</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end"
+              aria-labelledby="userMenu">
+            <li>
+              <form th:action="@{/logout}" method="post">
+                <input type="hidden"
+                       th:name="${_csrf.parameterName}"
+                       th:value="${_csrf.token}" />
+                <button class="dropdown-item" type="submit">
+                  Logout
+                </button>
+              </form>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</nav>
+</body>
+</html>

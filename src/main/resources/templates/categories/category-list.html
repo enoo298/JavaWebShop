@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Categories</title>
+  <!-- Bootstrap CSS (WebJar ili CDN) -->
+  <link rel="stylesheet"
+        th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+
+<!-- Navbar fragment -->
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Categories</h1>
+    <a class="btn btn-primary"
+       th:href="@{/categories/create}"
+       sec:authorize="hasRole('ADMIN')">
+      + New Category
+    </a>
+  </div>
+
+  <table class="table table-hover">
+    <thead class="table-light">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="cat : ${categories}">
+      <td th:text="${cat.id}">1</td>
+      <td th:text="${cat.name}">Electronics</td>
+      <td th:text="${cat.description}">Gadgets &amp; devices</td>
+      <td>
+        <a class="btn btn-sm btn-info me-1"
+           th:href="@{/categories/{id}(id=${cat.id})}">
+          View
+        </a>
+        <a class="btn btn-sm btn-secondary me-1"
+           th:href="@{/categories/{id}/edit(id=${cat.id})}"
+           sec:authorize="hasRole('ADMIN')">
+          Edit
+        </a>
+        <form th:action="@{/categories/{id}/delete(id=${cat.id})}"
+              method="post" style="display:inline"
+              sec:authorize="hasRole('ADMIN')">
+          <button class="btn btn-sm btn-danger"
+                  onclick="return confirm('Are you sure?')">
+            Delete
+          </button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}" defer></script>
+</body>
+</html>
